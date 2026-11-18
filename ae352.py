@@ -1,11 +1,8 @@
-#main
-import numpy as np
 """AE 352 quadcopter: 6-DOF EOM with four motor-torque inputs.
 
 Frames: inertial z up; body x forward, y left, z up.
 Rotor order: front (+x), left (+y), rear (-x), right (-y).
 Positive rotor spin directions: [+1, -1, +1, -1].
-No battery model, aerodynamic translational drag, or rotor gyroscopic coupling.
 """
 
 from dataclasses import dataclass
@@ -25,6 +22,8 @@ class DroneParams:
     rotor_inertia: float = 1.5e-5 # kg m^2
     k_thrust: float = 1.8e-5      # N / (rad/s)^2
     k_drag: float = 2.5e-7        # N m / (rad/s)^2
+    max_motor_torque: float = 0.12  # provisional mechanical limit, N m
+    max_rotor_speed: float = 650.0  # provisional limit, rad/s
 
 
 def rotation_body_to_world(roll, pitch, yaw):
@@ -45,14 +44,13 @@ def equations_of_motion(t, state, motor_torques, params):
     motor_torques(t, state) returns four nonnegative torque magnitudes (N m).
     Rotor spin direction signs are applied separately.
     """
-    pos = state[0:3]
     vel = state[3:6]
     roll, pitch, yaw = state[6:9]
     body_rates = state[9:12]  # p, q, r (rad/s)
     omega = state[12:16]      # rotor speeds (rad/s), all nonnegative
 
     tau = np.asarray(motor_torques(t, state), dtype=float)
-    if tau.shape != (4,) or np.any(tau < 0):
+    if tau.shape != (4,) or not np.all(np.isfinite(tau)) or np.any(tau < 0):
         raise ValueError('Motor inputs must be four nonnegative torque magnitudes')
 
     # Rotor spin directions: front, left, rear, right.
@@ -60,6 +58,7 @@ def equations_of_motion(t, state, motor_torques, params):
 
     # Rotor speed dynamics and generated thrust.
     rotor_accel = (tau - params.k_drag * omega**2) / params.rotor_inertia
+    rotor_accel = np.where((omega >= params.max_rotor_speed) & (rotor_accel > 0), 0, rotor_accel)
     thrust = params.k_thrust * omega**2
 
     # Translation in inertial frame.
@@ -89,7 +88,7 @@ def equations_of_motion(t, state, motor_torques, params):
     return np.concatenate([vel, acceleration, euler_rates, rate_accel, rotor_accel])
 
 
-def main():
+def original_hover_demo():
     params = DroneParams()
     hover_omega = np.sqrt(params.mass * params.gravity / (4.0 * params.k_thrust))
     hover_tau = params.k_drag * hover_omega**2
@@ -128,3 +127,12 @@ def main():
     axes[1].set_xlabel('Time (s)')
     axes[1].legend()
     axes[1].grid(True)
+
+
+def main():
+    from simulation import cli
+    cli()
+
+
+if __name__ == '__main__':
+    main()

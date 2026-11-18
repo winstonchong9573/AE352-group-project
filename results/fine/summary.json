@@ -1,0 +1,191 @@
+[
+  {
+    "mission": "hover",
+    "passed": true,
+    "checks": {
+      "120_seconds": true,
+      "position_within_5cm": true,
+      "torque_limit": true,
+      "rotor_limit": true,
+      "ground_not_penetrated": true
+    },
+    "metrics": {
+      "duration_s": 120.0,
+      "max_torque_Nm": 0.04087500000000009,
+      "max_rotor_speed_rad_s": 404.3513323831146,
+      "max_position_error_m": 0.0
+    },
+    "phase_events": [],
+    "parameters": {
+      "mass": 1.2,
+      "gravity": 9.81,
+      "arm": 0.22,
+      "Ixx": 0.018,
+      "Iyy": 0.018,
+      "Izz": 0.032,
+      "rotor_inertia": 1.5e-05,
+      "k_thrust": 1.8e-05,
+      "k_drag": 2.5e-07,
+      "max_motor_torque": 0.12,
+      "max_rotor_speed": 650.0
+    },
+    "limitations": [
+      "No electrical, battery, power or energy model; ER3 is unverified.",
+      "Parameters and actuator limits are provisional, not sourced hardware.",
+      "Tracking tolerances are project choices, not instructor-specified."
+    ]
+  },
+  {
+    "mission": "circle",
+    "passed": true,
+    "checks": {
+      "60_seconds": true,
+      "radius_within_10cm": true,
+      "altitude_within_5cm": true,
+      "speed_within_005m_s": true,
+      "torque_limit": true,
+      "rotor_limit": true,
+      "ground_not_penetrated": true
+    },
+    "metrics": {
+      "duration_s": 70.0,
+      "max_torque_Nm": 0.041357635322037664,
+      "max_rotor_speed_rad_s": 405.3637068556354,
+      "max_radius_error_m": 0.0005946626866428772,
+      "max_altitude_error_m": 9.207335807115413e-07,
+      "max_speed_error_m_s": 0.0001930418160527303,
+      "evaluated_duration_s": 60.0
+    },
+    "phase_events": [],
+    "parameters": {
+      "mass": 1.2,
+      "gravity": 9.81,
+      "arm": 0.22,
+      "Ixx": 0.018,
+      "Iyy": 0.018,
+      "Izz": 0.032,
+      "rotor_inertia": 1.5e-05,
+      "k_thrust": 1.8e-05,
+      "k_drag": 2.5e-07,
+      "max_motor_torque": 0.12,
+      "max_rotor_speed": 650.0
+    },
+    "limitations": [
+      "No electrical, battery, power or energy model; ER3 is unverified.",
+      "Parameters and actuator limits are provisional, not sourced hardware.",
+      "Tracking tolerances are project choices, not instructor-specified."
+    ]
+  },
+  {
+    "mission": "maneuver",
+    "passed": true,
+    "checks": {
+      "phases_completed": true,
+      "leg1": true,
+      "leg2": true,
+      "left_yaw_90deg": true,
+      "touchdown_at_most_001m_s": true,
+      "torque_limit": true,
+      "rotor_limit": true,
+      "ground_not_penetrated": true
+    },
+    "metrics": {
+      "duration_s": 150.975,
+      "max_torque_Nm": 0.12,
+      "max_rotor_speed_rad_s": 423.4998601842489,
+      "leg1": {
+        "distance_in_5s_m": 4.953772265634608,
+        "average_speed_in_5s_m_s": 0.9907544531269217,
+        "average_speed_including_settle_m_s": 0.6058928370914289,
+        "endpoint_error_m": 0.00771381125781051,
+        "stop_speed_m_s": 0.005726517377228209,
+        "max_altitude_error_m": 0.0063114481829065205
+      },
+      "leg2": {
+        "distance_in_5s_m": 4.954469636285513,
+        "average_speed_in_5s_m_s": 0.9908939272571026,
+        "average_speed_including_settle_m_s": 0.6059750762714089,
+        "endpoint_error_m": 0.007719671000687462,
+        "stop_speed_m_s": 0.005726667310359354,
+        "max_altitude_error_m": 0.006153724838896535
+      },
+      "touchdown": {
+        "time_s": 150.97166666666666,
+        "vertical_speed_m_s": 0.008000000894726229,
+        "position_m": [
+          5.000000000000027,
+          4.999999999999977,
+          0.0
+        ]
+      }
+    },
+    "phase_events": [
+      {
+        "phase": "takeoff",
+        "start_s": 0.0,
+        "end_s": 4.5,
+        "end_position_m": [
+          0.0,
+          0.0,
+          0.998092197030167
+        ],
+        "end_yaw_rad": 0.0,
+        "end_speed_m_s": 0.0007573248622837176
+      },
+      {
+        "phase": "leg1",
+        "start_s": 4.5,
+        "end_s": 12.77,
+        "end_position_m": [
+          5.007674437223941,
+          6.287356393124956e-09,
+          0.9996191780137923
+        ],
+        "end_yaw_rad": -6.31595105473865e-09,
+        "end_speed_m_s": 0.006248104671518884
+      },
+      {
+        "phase": "yaw",
+        "start_s": 12.77,
+        "end_s": 17.7,
+        "end_position_m": [
+          4.999467465864564,
+          -0.0006738332150267642,
+          0.9999920382993503
+        ],
+        "end_yaw_rad": 1.5687745416010097,
+        "end_speed_m_s": 0.003501756443152252
+      },
+      {
+        "phase": "leg2",
+        "start_s": 17.7,
+        "end_s": 25.97,
+        "end_position_m": [
+          4.99999995798423,
+          5.007680281201109,
+          0.9996187442012304
+        ],
+        "end_yaw_rad": 1.57079642292066,
+        "end_speed_m_s": 0.006248613273473711
+      }
+    ],
+    "parameters": {
+      "mass": 1.2,
+      "gravity": 9.81,
+      "arm": 0.22,
+      "Ixx": 0.018,
+      "Iyy": 0.018,
+      "Izz": 0.032,
+      "rotor_inertia": 1.5e-05,
+      "k_thrust": 1.8e-05,
+      "k_drag": 2.5e-07,
+      "max_motor_torque": 0.12,
+      "max_rotor_speed": 650.0
+    },
+    "limitations": [
+      "No electrical, battery, power or energy model; ER3 is unverified.",
+      "Parameters and actuator limits are provisional, not sourced hardware.",
+      "Tracking tolerances are project choices, not instructor-specified."
+    ]
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "mission": "hover",
+  "passed": true,
+  "checks": {
+    "120_seconds": true,
+    "position_within_5cm": true,
+    "torque_limit": true,
+    "rotor_limit": true,
+    "ground_not_penetrated": true
+  },
+  "metrics": {
+    "duration_s": 120.0,
+    "max_torque_Nm": 0.04087500000000009,
+    "max_rotor_speed_rad_s": 404.3513323831146,
+    "max_position_error_m": 0.0
+  },
+  "phase_events": [],
+  "parameters": {
+    "mass": 1.2,
+    "gravity": 9.81,
+    "arm": 0.22,
+    "Ixx": 0.018,
+    "Iyy": 0.018,
+    "Izz": 0.032,
+    "rotor_inertia": 1.5e-05,
+    "k_thrust": 1.8e-05,
+    "k_drag": 2.5e-07,
+    "max_motor_torque": 0.12,
+    "max_rotor_speed": 650.0
+  },
+  "limitations": [
+    "No electrical, battery, power or energy model; ER3 is unverified.",
+    "Parameters and actuator limits are provisional, not sourced hardware.",
+    "Tracking tolerances are project choices, not instructor-specified."
+  ]
+}

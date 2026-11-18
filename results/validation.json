@@ -1,0 +1,8 @@
+{
+  "physics_and_controller_tests": 8,
+  "coarse_dt_s": 0.01,
+  "fine_dt_s": 0.005,
+  "all_missions_pass_both_steps": true,
+  "touchdown_time_difference_s": 0.0016666666666367291,
+  "leg1_average_speed_difference_m_s": 9.271271578903395e-06
+}

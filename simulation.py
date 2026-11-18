@@ -1,4 +1,4 @@
-"""Torque-controlled missions. SI units; no electrical or energy model."""
+"""Torque-controlled missions. SI units"""
 import argparse
 import csv
 import json
@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from ae352 import DroneParams, equations_of_motion, rotation_body_to_world
+from battery import Battery, BatteryParams
 
 SPIN = np.array([1., -1., 1., -1.])
 STATE_NAMES = ['x', 'y', 'z', 'vx', 'vy', 'vz', 'roll', 'pitch', 'yaw',
@@ -152,13 +153,19 @@ def rk4(state, torque, dt, params):
     return state + dt*(k1+2*k2+2*k3+k4)/6
 
 
-def run_mission(name, params=None, dt=.01):
+def run_mission(name, params=None, dt=.01, battery_params=None, initial_soc=1.):
     if name not in {'hover', 'circle', 'maneuver'}:
         raise ValueError('Unknown mission')
     if not 0 < dt <= .01:
         raise ValueError('Use a positive step no larger than 0.01 s')
     params = params or DroneParams()
     controller, mission = Controller(params), Mission(name)
+    battery = Battery(battery_params, initial_soc)
+    if battery.params.mass_kg >= params.mass:
+        raise ValueError('Total drone mass must include battery and positive airframe mass')
+    mission.battery = battery
+    mission.battery_records = []
+    mission.initial_soc = initial_soc
     state = np.zeros(16)
     if name != 'maneuver':
         state[2] = 1.
@@ -173,11 +180,14 @@ def run_mission(name, params=None, dt=.01):
         mission.update(t, state)
         ref = mission.reference(t)
         torque, angles = controller.command(state, ref)
+        torque, power = battery.supply(torque, state[12:16], dt)
+        mission.battery_records.append({'time_s': t, **power})
         records.append((t, state.copy(), ref.position.copy(), ref.velocity.copy(),
                         torque.copy(), angles.copy(), mission.phase))
-        if mission.done or step == round(duration/dt):
+        if mission.done or battery.cutoff or step == round(duration/dt):
             break
         next_state = rk4(state, torque, dt, params)
+        battery.advance(power, dt)
         if not np.all(np.isfinite(next_state)):
             raise RuntimeError(f'Nonfinite state at {t}')
         if next_state[2] < 0:
@@ -207,19 +217,20 @@ def summarize(records, mission, touchdown, params):
                   'position_within_5cm': metrics['max_position_error_m'] <= .05}
     elif mission.name == 'circle':
         mask = t >= 10
-        metrics.update(max_radius_error_m=float(np.max(abs(np.linalg.norm(s[mask, :2], axis=1)-2))),
-                       max_altitude_error_m=float(np.max(abs(s[mask, 2]-1))),
-                       max_speed_error_m_s=float(np.max(abs(np.linalg.norm(s[mask, 3:6], axis=1)-.5))),
-                       evaluated_duration_s=float(t[-1]-10))
+        metrics.update(max_radius_error_m=float(np.max(abs(np.linalg.norm(s[mask, :2], axis=1)-2))) if mask.any() else None,
+                       max_altitude_error_m=float(np.max(abs(s[mask, 2]-1))) if mask.any() else None,
+                       max_speed_error_m_s=float(np.max(abs(np.linalg.norm(s[mask, 3:6], axis=1)-.5))) if mask.any() else None,
+                       evaluated_duration_s=max(0., float(t[-1]-10)))
         checks = {'60_seconds': metrics['evaluated_duration_s'] >= 60-1e-8,
-                  'radius_within_10cm': metrics['max_radius_error_m'] <= .1,
-                  'altitude_within_5cm': metrics['max_altitude_error_m'] <= .05,
-                  'speed_within_005m_s': metrics['max_speed_error_m_s'] <= .05}
+                  'radius_within_10cm': mask.any() and metrics['max_radius_error_m'] <= .1,
+                  'altitude_within_5cm': mask.any() and metrics['max_altitude_error_m'] <= .05,
+                  'speed_within_005m_s': mask.any() and metrics['max_speed_error_m_s'] <= .05}
     else:
         checks['phases_completed'] = len(mission.events) == 4 and touchdown is not None
         for phase, start, end in [('leg1', [0, 0, 1], [5, 0, 1]), ('leg2', [5, 0, 1], [5, 5, 1])]:
+            checks[phase] = False
             mask = np.array([r[6] == phase for r in records])
-            if mask.any():
+            if mask.sum() > 1:
                 # Five-second commanded translation window, excluding the explicitly
                 # reported settling interval. Also report average including settling.
                 times = t[mask]; points = s[mask]
@@ -240,15 +251,33 @@ def summarize(records, mission, touchdown, params):
     checks['torque_limit'] = bool(torque.max() <= params.max_motor_torque+1e-10)
     checks['rotor_limit'] = bool(s[:, 12:16].max() <= params.max_rotor_speed+1e-8)
     checks['ground_not_penetrated'] = bool(s[:, 2].min() >= 0)
+    logs = mission.battery_records
+    bp = mission.battery.params
+    power_metrics = {'initial_soc': mission.initial_soc, 'final_soc': mission.battery.soc,
+                     'energy_used_Wh': mission.battery.energy_Wh,
+                     'charge_used_Ah': mission.battery.charge_Ah,
+                     'nominal_pack_energy_Wh': bp.nominal_energy_Wh,
+                     'minimum_voltage_V': min(r['voltage_V'] for r in logs),
+                     'peak_current_A': max(r['current_A'] for r in logs),
+                     'peak_power_W': max(r['power_W'] for r in logs),
+                     'battery_mass_kg': bp.mass_kg, 'airframe_and_propulsion_mass_kg': params.mass-bp.mass_kg,
+                     'cutoff': mission.battery.cutoff,
+                     'power_limited_samples': sum(r['power_limited'] for r in logs)}
+    checks['ER3_no_battery_cutoff'] = not mission.battery.cutoff
+    checks['battery_reserve_at_least_20percent'] = mission.battery.soc >= bp.reserve_soc
+    checks['battery_voltage_limit'] = power_metrics['minimum_voltage_V'] >= bp.series*bp.cell_cutoff_V-1e-9
+    checks['battery_current_limit'] = power_metrics['peak_current_A'] <= bp.parallel*bp.cell_max_current_A+1e-9
     checks = {key: bool(value) for key, value in checks.items()}
     return {'mission': mission.name, 'passed': bool(all(checks.values())), 'checks': checks,
-            'metrics': metrics, 'phase_events': mission.events, 'parameters': asdict(params),
-            'limitations': ['No electrical, battery, power or energy model; ER3 is unverified.',
-                            'Parameters and actuator limits are provisional, not sourced hardware.',
+            'metrics': metrics, 'battery': power_metrics, 'battery_parameters': asdict(bp),
+            'phase_events': mission.events, 'parameters': asdict(params),
+            'limitations': ['ER3 passes only under the documented battery and propulsion assumptions; no thermal model.',
+                            'Motor/rotor, airframe parameters and actuator limits remain provisional; ER4 is not fully verified.',
+                            'OCV curve, DC resistance and motor/ESC losses are assumed, not measured.',
                             'Tracking tolerances are project choices, not instructor-specified.']}
 
 
-def save_results(records, summary, folder):
+def save_results(records, summary, folder, battery_records=None):
     folder.mkdir(parents=True, exist_ok=True)
     with (folder/'trajectory.csv').open('w', newline='') as f:
         writer = csv.writer(f)
@@ -258,6 +287,21 @@ def save_results(records, summary, folder):
         for t, s, pos, vel, torque, angles, phase in records:
             writer.writerow([t, *s, *pos, *vel, *torque, *angles, phase])
     (folder/'summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
+    if battery_records:
+        with (folder/'battery.csv').open('w', newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=list(battery_records[0]))
+            writer.writeheader(); writer.writerows(battery_records)
+        bt = np.array([r['time_s'] for r in battery_records])
+        fig, axes = plt.subplots(2, 2, figsize=(11, 7), sharex=True)
+        for ax, key, label in zip(axes.flat, ['soc', 'voltage_V', 'current_A', 'energy_used_Wh'],
+                                 ['State of charge (%)', 'Terminal voltage (V)', 'Battery current (A)', 'Energy used (Wh)']):
+            values = np.array([r[key] for r in battery_records])
+            ax.plot(bt, values*100 if key == 'soc' else values)
+            ax.set_ylabel(label); ax.set_xlabel('Time (s)'); ax.grid(alpha=.25)
+        axes[0, 0].axhline(100*summary['battery_parameters']['reserve_soc'], color='r', ls='--', label='Reserve')
+        axes[0, 0].legend()
+        fig.suptitle(f"{summary['mission'].title()} - battery and energy")
+        fig.tight_layout(); fig.savefig(folder/'battery.png', dpi=160); plt.close(fig)
     t = np.array([r[0] for r in records]); s = np.array([r[1] for r in records])
     ref = np.array([r[2] for r in records]); angles = np.array([r[5] for r in records])
     torques = np.array([r[4] for r in records])
@@ -298,18 +342,27 @@ def cli():
     parser.add_argument('--mission', choices=['all', 'hover', 'circle', 'maneuver'], default='all')
     parser.add_argument('--output', type=Path, default=Path('results'))
     parser.add_argument('--dt', type=float, default=.01)
+    parser.add_argument('--initial-soc', type=float, default=1.)
+    parser.add_argument('--fresh-battery-each-mission', action='store_true',
+                        help='Default all-mission run carries SOC across missions; this resets it instead')
     args = parser.parse_args()
     if not 0 < args.dt <= .01:
         parser.error('--dt must be positive and at most 0.01 seconds')
     params = DroneParams()
     summaries = []
+    soc = args.initial_soc
+    if not np.isfinite(soc) or not 0 <= soc <= 1:
+        parser.error('--initial-soc must be between 0 and 1')
     for name in (['hover', 'circle', 'maneuver'] if args.mission == 'all' else [args.mission]):
-        records, mission, touchdown = run_mission(name, params, args.dt)
+        records, mission, touchdown = run_mission(name, params, args.dt, initial_soc=soc)
         summary = summarize(records, mission, touchdown, params)
-        save_results(records, summary, args.output/name)
+        save_results(records, summary, args.output/name, mission.battery_records)
+        if not args.fresh_battery_each_mission:
+            soc = mission.battery.soc
         summaries.append(summary)
         print(f"{name}: {'PASS' if summary['passed'] else 'FAIL'}", flush=True)
         print(json.dumps(summary['metrics'], indent=2), flush=True)
+        print(json.dumps(summary['battery'], indent=2), flush=True)
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output/'summary.json').write_text(json.dumps(summaries, indent=2), encoding='utf-8')
     if not all(s['passed'] for s in summaries):

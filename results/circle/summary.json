@@ -8,7 +8,11 @@
     "speed_within_005m_s": true,
     "torque_limit": true,
     "rotor_limit": true,
-    "ground_not_penetrated": true
+    "ground_not_penetrated": true,
+    "ER3_no_battery_cutoff": true,
+    "battery_reserve_at_least_20percent": true,
+    "battery_voltage_limit": true,
+    "battery_current_limit": true
   },
   "metrics": {
     "duration_s": 70.0,
@@ -18,6 +22,38 @@
     "max_altitude_error_m": 9.091667494409705e-07,
     "max_speed_error_m_s": 0.00019167424005517297,
     "evaluated_duration_s": 60.0
+  },
+  "battery": {
+    "initial_soc": 0.9643630716273007,
+    "final_soc": 0.9433527982196173,
+    "energy_used_Wh": 1.7671466489071346,
+    "charge_used_Ah": 0.07227534052243409,
+    "nominal_pack_energy_Wh": 92.88,
+    "minimum_voltage_V": 24.35432702938068,
+    "peak_current_A": 3.7316461621764034,
+    "peak_power_W": 90.8976416844119,
+    "battery_mass_kg": 0.48000000000000004,
+    "airframe_and_propulsion_mass_kg": 0.72,
+    "cutoff": false,
+    "power_limited_samples": 0
+  },
+  "battery_parameters": {
+    "series": 6,
+    "parallel": 1,
+    "cell_capacity_Ah": 4.3,
+    "cell_nominal_V": 3.6,
+    "cell_full_V": 4.2,
+    "cell_cutoff_V": 2.5,
+    "cell_max_current_A": 45.0,
+    "cell_mass_kg": 0.07,
+    "packaging_mass_kg": 0.06,
+    "cell_resistance_ohm": 0.015,
+    "discharge_efficiency": 0.8,
+    "motor_efficiency": 0.85,
+    "esc_efficiency": 0.95,
+    "electronics_W": 5.0,
+    "motor_idle_W_each": 1.0,
+    "reserve_soc": 0.2
   },
   "phase_events": [],
   "parameters": {
@@ -34,8 +70,9 @@
     "max_rotor_speed": 650.0
   },
   "limitations": [
-    "No electrical, battery, power or energy model; ER3 is unverified.",
-    "Parameters and actuator limits are provisional, not sourced hardware.",
+    "ER3 passes only under the documented battery and propulsion assumptions; no thermal model.",
+    "Motor/rotor, airframe parameters and actuator limits remain provisional; ER4 is not fully verified.",
+    "OCV curve, DC resistance and motor/ESC losses are assumed, not measured.",
     "Tracking tolerances are project choices, not instructor-specified."
   ]
 }

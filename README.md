@@ -1,11 +1,12 @@
 # AE352 quadcopter simulation
 
 Mechanical six-degree-of-freedom model driven only by four motor torques.
-Includes rotor inertia, position/attitude feedback, ground support, and three missions.
-No electrical, battery, power, or energy calculations are included. ER3 (adequate
-power supply) is not verified. Parameters and mechanical actuator limits are
-provisional engineering assumptions; the team must replace or justify them using
-documented components before claiming ER4 or hardware feasibility.
+Includes rotor inertia, position/attitude feedback, ground support, three missions,
+and a finite battery with voltage sag, current limits, drive losses and cutoff.
+ER3 is evaluated for the modeled conditions; all three missions share one battery
+by default. Motor/rotor and airframe parameters remain provisional; the team must
+replace or justify them using documented components before claiming full ER4 or
+hardware feasibility. Battery mass is INCLUDED in the 1.2 kg total, not added twice.
 
 ## Run
 
@@ -15,7 +16,11 @@ Use Python 3.10 or newer:
 python -m pip install -r requirements.txt
 python ae352.py
 python ae352.py --mission circle
+python ae352.py --initial-soc 0.5
+python ae352.py --fresh-battery-each-mission
 python -m unittest -v
+python ae352.py --dt 0.005 --output results/fine
+python validate_results.py
 ```
 
 If Windows selects a Microsoft Store Python alias, use your installed interpreter's
@@ -23,13 +28,15 @@ full path. Runs save files without opening windows. `--output folder` changes th
 destination; `--dt 0.005` allows a finer integration check. Default step: 0.01 s.
 
 Each mission saves `trajectory.csv`, `summary.json`, `states.png`, `motors.png`,
-and `path.png` under `results/<mission>/`. Aggregate checks are in
+`path.png`, `battery.csv`, and `battery.png` under `results/<mission>/`. Aggregate checks are in
 `results/summary.json`. A failed requirement check returns a nonzero exit code.
 
 ## Files
 
 - `ae352.py`: physical parameters, rotation matrix, equations of motion, CLI entry.
 - `simulation.py`: controllers, allocation, mission phases, RK4, metrics and plots.
+- `battery.py`: battery ratings, losses, voltage/current calculation and depletion.
+- `test_battery.py`: conservation, current limit, cutoff and depleted-mission tests.
 - `test_simulation.py`: independent physics and recovery checks.
 - `ae352_original.py`: untouched pre-implementation copy for comparison.
 
@@ -81,3 +88,37 @@ The maneuver starts on the ground with stopped rotors. Touchdown speed is
 interpolated immediately before ground projection and must be <=0.01 m/s.
 The simulation ends at touchdown; projected zero velocity is not used as proof
 of slow landing. Landing takes about 125 s because of the low speed limit.
+
+## Battery, power and ER3
+
+The chosen battery is a modeled 6S1P pack of Molicel INR-21700-P45B cells.
+Manufacturer values and assumptions are separated in [BATTERY_MODEL.md](BATTERY_MODEL.md).
+Nominal pack voltage is 21.6 V; minimum rated capacity is 4.3 Ah; nominal energy
+is 92.88 Wh. Six cells at maximum 70 g each plus assumed 60 g packaging weigh
+0.48 kg. Remaining drone mass is 0.72 kg. The total inertia is still assumed.
+
+Requested shaft power is `sum(torque * rotor_speed)`. Motor and ESC efficiencies
+are assumed 0.85 and 0.95; electronics plus idle losses add 9 W. Battery current
+solves `P = (Voc - I*R)*I`, using the low-current root. SOC decreases according
+to charge removed with a conservative 0.8 effective-capacity factor. Electrical
+energy integrates terminal power over time; energy and charge are distinct logs.
+
+The supply enforces cell current, loaded-voltage and maximum-power limits and
+reduces the actual torques passed to the flight dynamics if demand is infeasible.
+Empty batteries disarm and terminate the mission as a failure. A depleted battery
+cannot pass a hover or circle merely because those cases start in flight.
+The acceptance checks additionally require at least 20% SOC remaining.
+
+For `--mission all`, SOC carries over in order: hover, circle, maneuver. Flight
+states still reset between these independent demonstrations; this is not one
+continuous flight. Initial airborne position, velocity and rotor kinetic energy
+are prescribed initial conditions, and setup/takeoff between separate scenarios
+is not charged. Use `--fresh-battery-each-mission` to evaluate separate packs.
+
+This is a power-budget model allowed by the assignment's ideal motor-torque
+control assumption. It does not implement motor back-EMF, winding resistance,
+voltage-dependent maximum torque, temperature, aging or regeneration. Battery
+OCV, resistance and efficiencies are assumptions; source-backed battery ratings
+do not establish a source-backed propulsion design. ER3 results are conditional
+on these assumptions; ER4 remains partly open. Original mechanics-only results
+have been replaced by battery-aware results, including the finer-step run.

@@ -9,37 +9,73 @@
     "touchdown_at_most_001m_s": true,
     "torque_limit": true,
     "rotor_limit": true,
-    "ground_not_penetrated": true
+    "ground_not_penetrated": true,
+    "ER3_no_battery_cutoff": true,
+    "battery_reserve_at_least_20percent": true,
+    "battery_voltage_limit": true,
+    "battery_current_limit": true
   },
   "metrics": {
-    "duration_s": 150.98,
+    "duration_s": 150.97,
     "max_torque_Nm": 0.12,
-    "max_rotor_speed_rad_s": 423.5042200527706,
+    "max_rotor_speed_rad_s": 423.50422005277056,
     "leg1": {
-      "distance_in_5s_m": 4.953818621992503,
-      "average_speed_in_5s_m_s": 0.9907637243985006,
+      "distance_in_5s_m": 4.953818621992504,
+      "average_speed_in_5s_m_s": 0.9907637243985008,
       "average_speed_including_settle_m_s": 0.6062529242914949,
       "endpoint_error_m": 0.007658699299150547,
-      "stop_speed_m_s": 0.0053305656769445505,
+      "stop_speed_m_s": 0.005330565676944554,
       "max_altitude_error_m": 0.006295933540347409
     },
     "leg2": {
       "distance_in_5s_m": 4.954511258151917,
       "average_speed_in_5s_m_s": 0.9909022516303834,
-      "average_speed_including_settle_m_s": 0.6063347957573968,
-      "endpoint_error_m": 0.007664359824717624,
-      "stop_speed_m_s": 0.0053309411061282,
+      "average_speed_including_settle_m_s": 0.6063347957573967,
+      "endpoint_error_m": 0.007664359824716725,
+      "stop_speed_m_s": 0.005330941106128584,
       "max_altitude_error_m": 0.00613597998764559
     },
     "touchdown": {
-      "time_s": 150.9733333333333,
-      "vertical_speed_m_s": 0.008000006908216662,
+      "time_s": 150.96999999999997,
+      "vertical_speed_m_s": 0.008000000000000191,
       "position_m": [
-        4.999999999999987,
-        5.000000000000012,
-        -1.6940658945086007e-21
+        4.999999999999988,
+        5.0000000000000115,
+        0.0
       ]
     }
+  },
+  "battery": {
+    "initial_soc": 0.9433527982196173,
+    "final_soc": 0.8974505013214094,
+    "energy_used_Wh": 3.8125430623102865,
+    "charge_used_Ah": 0.15790390132984097,
+    "nominal_pack_energy_Wh": 92.88,
+    "minimum_voltage_V": 23.935393209347975,
+    "peak_current_A": 4.163833782192212,
+    "peak_power_W": 101.24497502113555,
+    "battery_mass_kg": 0.48000000000000004,
+    "airframe_and_propulsion_mass_kg": 0.72,
+    "cutoff": false,
+    "power_limited_samples": 0
+  },
+  "battery_parameters": {
+    "series": 6,
+    "parallel": 1,
+    "cell_capacity_Ah": 4.3,
+    "cell_nominal_V": 3.6,
+    "cell_full_V": 4.2,
+    "cell_cutoff_V": 2.5,
+    "cell_max_current_A": 45.0,
+    "cell_mass_kg": 0.07,
+    "packaging_mass_kg": 0.06,
+    "cell_resistance_ohm": 0.015,
+    "discharge_efficiency": 0.8,
+    "motor_efficiency": 0.85,
+    "esc_efficiency": 0.95,
+    "electronics_W": 5.0,
+    "motor_idle_W_each": 1.0,
+    "reserve_soc": 0.2
   },
   "phase_events": [
     {
@@ -52,7 +88,7 @@
         0.998032956642506
       ],
       "end_yaw_rad": 0.0,
-      "end_speed_m_s": 0.000806295853516886
+      "end_speed_m_s": 0.0008062958535169604
     },
     {
       "phase": "leg1",
@@ -60,11 +96,11 @@
       "end_s": 12.77,
       "end_position_m": [
         5.007590802935239,
-        6.476895357737519e-09,
+        6.476895505216926e-09,
         0.9996220623776005
       ],
-      "end_yaw_rad": -6.8498246769426544e-09,
-      "end_speed_m_s": 0.0063681481344740574
+      "end_yaw_rad": -6.849824674884172e-09,
+      "end_speed_m_s": 0.0063681481344740505
     },
     {
       "phase": "yaw",
@@ -72,23 +108,23 @@
       "end_s": 17.7,
       "end_position_m": [
         4.9994846297187205,
-        -0.0006705853976292785,
+        -0.0006705853976295442,
         0.9999962625063016
       ],
       "end_yaw_rad": 1.5687492934907252,
-      "end_speed_m_s": 0.0034411641179618
+      "end_speed_m_s": 0.003441164117961498
     },
     {
       "phase": "leg2",
       "start_s": 17.7,
       "end_s": 25.97,
       "end_position_m": [
-        4.9999998143927815,
-        5.0075964427638056,
-        0.9996216430368127
+        4.999999814392783,
+        5.007596442763805,
+        0.9996216430368129
       ],
       "end_yaw_rad": 1.570796417835626,
-      "end_speed_m_s": 0.00636921223506419
+      "end_speed_m_s": 0.006369212235064572
     }
   ],
   "parameters": {
@@ -105,8 +141,9 @@
     "max_rotor_speed": 650.0
   },
   "limitations": [
-    "No electrical, battery, power or energy model; ER3 is unverified.",
-    "Parameters and actuator limits are provisional, not sourced hardware.",
+    "ER3 passes only under the documented battery and propulsion assumptions; no thermal model.",
+    "Motor/rotor, airframe parameters and actuator limits remain provisional; ER4 is not fully verified.",
+    "OCV curve, DC resistance and motor/ESC losses are assumed, not measured.",
     "Tracking tolerances are project choices, not instructor-specified."
   ]
 }

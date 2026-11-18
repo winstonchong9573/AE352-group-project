@@ -6,13 +6,49 @@
     "position_within_5cm": true,
     "torque_limit": true,
     "rotor_limit": true,
-    "ground_not_penetrated": true
+    "ground_not_penetrated": true,
+    "ER3_no_battery_cutoff": true,
+    "battery_reserve_at_least_20percent": true,
+    "battery_voltage_limit": true,
+    "battery_current_limit": true
   },
   "metrics": {
     "duration_s": 120.0,
     "max_torque_Nm": 0.04087500000000009,
     "max_rotor_speed_rad_s": 404.3513323831146,
     "max_position_error_m": 0.0
+  },
+  "battery": {
+    "initial_soc": 1.0,
+    "final_soc": 0.9643630617943755,
+    "energy_used_Wh": 3.0290585281599007,
+    "charge_used_Ah": 0.12259106742739302,
+    "nominal_pack_energy_Wh": 92.88,
+    "minimum_voltage_V": 24.546079602782655,
+    "peak_current_A": 3.702088370741402,
+    "peak_power_W": 90.87175584475466,
+    "battery_mass_kg": 0.48000000000000004,
+    "airframe_and_propulsion_mass_kg": 0.72,
+    "cutoff": false,
+    "power_limited_samples": 0
+  },
+  "battery_parameters": {
+    "series": 6,
+    "parallel": 1,
+    "cell_capacity_Ah": 4.3,
+    "cell_nominal_V": 3.6,
+    "cell_full_V": 4.2,
+    "cell_cutoff_V": 2.5,
+    "cell_max_current_A": 45.0,
+    "cell_mass_kg": 0.07,
+    "packaging_mass_kg": 0.06,
+    "cell_resistance_ohm": 0.015,
+    "discharge_efficiency": 0.8,
+    "motor_efficiency": 0.85,
+    "esc_efficiency": 0.95,
+    "electronics_W": 5.0,
+    "motor_idle_W_each": 1.0,
+    "reserve_soc": 0.2
   },
   "phase_events": [],
   "parameters": {
@@ -29,8 +65,9 @@
     "max_rotor_speed": 650.0
   },
   "limitations": [
-    "No electrical, battery, power or energy model; ER3 is unverified.",
-    "Parameters and actuator limits are provisional, not sourced hardware.",
+    "ER3 passes only under the documented battery and propulsion assumptions; no thermal model.",
+    "Motor/rotor, airframe parameters and actuator limits remain provisional; ER4 is not fully verified.",
+    "OCV curve, DC resistance and motor/ESC losses are assumed, not measured.",
     "Tracking tolerances are project choices, not instructor-specified."
   ]
 }

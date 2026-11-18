@@ -1,8 +1,49 @@
 {
-  "physics_and_controller_tests": 8,
-  "coarse_dt_s": 0.01,
-  "fine_dt_s": 0.005,
-  "all_missions_pass_both_steps": true,
-  "touchdown_time_difference_s": 0.0016666666666367291,
-  "leg1_average_speed_difference_m_s": 9.271271578903395e-06
+  "passed": true,
+  "checks": {
+    "hover_both_pass": true,
+    "hover_energy_converged": true,
+    "hover_soc_converged": true,
+    "hover_energy_integral": true,
+    "hover_charge_integral": true,
+    "hover_soc_balance": true,
+    "fine\\hover_energy_integral": true,
+    "fine\\hover_charge_integral": true,
+    "fine\\hover_soc_balance": true,
+    "circle_both_pass": true,
+    "circle_energy_converged": true,
+    "circle_soc_converged": true,
+    "circle_energy_integral": true,
+    "circle_charge_integral": true,
+    "circle_soc_balance": true,
+    "fine\\circle_energy_integral": true,
+    "fine\\circle_charge_integral": true,
+    "fine\\circle_soc_balance": true,
+    "maneuver_both_pass": true,
+    "maneuver_energy_converged": true,
+    "maneuver_soc_converged": true,
+    "maneuver_energy_integral": true,
+    "maneuver_charge_integral": true,
+    "maneuver_soc_balance": true,
+    "fine\\maneuver_energy_integral": true,
+    "fine\\maneuver_charge_integral": true,
+    "fine\\maneuver_soc_balance": true,
+    "same_pack_soc_carried": true
+  },
+  "differences": {
+    "hover": {
+      "energy_difference_Wh": 1.766586876783549e-12,
+      "final_soc_difference": 9.832925251807012e-09
+    },
+    "circle": {
+      "energy_difference_Wh": 2.5186061680670946e-08,
+      "final_soc_difference": 1.612195843492259e-08
+    },
+    "maneuver": {
+      "energy_difference_Wh": 0.00020289287659647215,
+      "final_soc_difference": 2.496069105739629e-06
+    }
+  },
+  "total_energy_Wh": 8.608748239375554,
+  "final_soc": 0.8974505013214094
 }

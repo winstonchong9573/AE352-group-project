@@ -1,0 +1,83 @@
+{
+  "mission": "hover",
+  "passed": true,
+  "checks": {
+    "120_seconds": true,
+    "position_within_5cm": true,
+    "torque_limit": true,
+    "rotor_limit": true,
+    "ground_not_penetrated": true,
+    "ER3_no_battery_cutoff": true,
+    "battery_voltage_limit": true,
+    "battery_current_limit": true,
+    "battery_reserve_at_least_25percent": true,
+    "estimated_motor_current_within_15A_design_limit": true,
+    "estimated_motor_voltage_feasible": true
+  },
+  "metrics": {
+    "duration_s": 120.0,
+    "max_torque_Nm": 0.05142733424346962,
+    "max_rotor_speed_rad_s": 614.6708494483951,
+    "max_position_error_m": 5.695767746752004e-15
+  },
+  "battery": {
+    "initial_soc": 1.0,
+    "final_soc": 0.9290414075613976,
+    "energy_used_Wh": 5.9124356533857325,
+    "charge_used_Ah": 0.244097557988798,
+    "nominal_pack_energy_Wh": 92.88,
+    "minimum_voltage_V": 23.893251966589933,
+    "peak_current_A": 7.423563349584988,
+    "peak_power_W": 177.3730696015772,
+    "battery_mass_kg": 0.47500000000000003,
+    "airframe_and_propulsion_mass_kg": 1.0377477816825003,
+    "cutoff": false,
+    "power_limited_samples": 0
+  },
+  "battery_parameters": {
+    "series": 6,
+    "parallel": 1,
+    "cell_capacity_Ah": 4.3,
+    "cell_nominal_V": 3.6,
+    "cell_full_V": 4.2,
+    "cell_cutoff_V": 3.0,
+    "cell_max_current_A": 30.0,
+    "cell_mass_kg": 0.07,
+    "packaging_mass_kg": 0.055,
+    "cell_resistance_ohm": 0.015,
+    "discharge_efficiency": 0.8,
+    "motor_efficiency": 0.8,
+    "esc_efficiency": 0.95,
+    "electronics_W": 7.0,
+    "motor_idle_W_each": 1.0,
+    "reserve_soc": 0.25
+  },
+  "phase_events": [],
+  "parameters": {
+    "mass": 1.5127477816825003,
+    "gravity": 9.81,
+    "arm": 0.22,
+    "Ixx": 0.015317763597315175,
+    "Iyy": 0.015409882288448501,
+    "Izz": 0.026402058995337388,
+    "rotor_inertia": 5.224836797827307e-05,
+    "k_thrust": 9.819521064661901e-06,
+    "k_drag": 1.3611587471323575e-07,
+    "max_motor_torque": 0.15,
+    "max_rotor_speed": 890.117918517108
+  },
+  "limitations": [
+    "Selected catalog components; custom frame joints and inertia/propeller-inertia approximations need physical validation.",
+    "Propeller coefficients fit manufacturer computational static data, not a measured motor-prop combination.",
+    "Battery OCV and efficiencies are approximations; no thermal, sensor-noise or complete motor-electrical model.",
+    "Mission tolerance and translation averaging intervals are team choices; passing is not instructor signoff.",
+    "Ground contact remains a point model, not landing-gear contact geometry."
+  ],
+  "design": "D440 / 9-inch / 6S",
+  "hardware_estimates": {
+    "peak_motor_current_A": 5.2617902077286685,
+    "peak_motor_voltage_V": 7.300647631920946,
+    "minimum_motor_voltage_headroom_V": 16.59260433466899,
+    "note": "Algebraic motor envelope estimates; phase-resistance convention and idle-current scaling are approximations."
+  }
+}

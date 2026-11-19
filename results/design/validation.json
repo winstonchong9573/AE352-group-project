@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "checks": {
+    "hover_both_pass": true,
+    "hover_energy_converged": true,
+    "hover_soc_converged": true,
+    "hover_energy_integral": true,
+    "hover_charge_integral": true,
+    "hover_soc_balance": true,
+    "fine\\hover_energy_integral": true,
+    "fine\\hover_charge_integral": true,
+    "fine\\hover_soc_balance": true,
+    "circle_both_pass": true,
+    "circle_energy_converged": true,
+    "circle_soc_converged": true,
+    "circle_energy_integral": true,
+    "circle_charge_integral": true,
+    "circle_soc_balance": true,
+    "fine\\circle_energy_integral": true,
+    "fine\\circle_charge_integral": true,
+    "fine\\circle_soc_balance": true,
+    "maneuver_both_pass": true,
+    "maneuver_energy_converged": true,
+    "maneuver_soc_converged": true,
+    "maneuver_energy_integral": true,
+    "maneuver_charge_integral": true,
+    "maneuver_soc_balance": true,
+    "fine\\maneuver_energy_integral": true,
+    "fine\\maneuver_charge_integral": true,
+    "fine\\maneuver_soc_balance": true,
+    "same_pack_soc_carried": true
+  },
+  "differences": {
+    "hover": {
+      "energy_difference_Wh": 1.7763568394002505e-15,
+      "final_soc_difference": 4.062063085896739e-08
+    },
+    "circle": {
+      "energy_difference_Wh": 5.5885560623636366e-08,
+      "final_soc_difference": 6.721421819122497e-08
+    },
+    "maneuver": {
+      "energy_difference_Wh": 0.00018416316781877384,
+      "final_soc_difference": 2.098415696871747e-06
+    }
+  },
+  "total_energy_Wh": 16.81356828119839,
+  "final_soc": 0.7928093512982977
+}

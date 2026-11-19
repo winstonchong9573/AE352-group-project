@@ -92,19 +92,19 @@
       "duration_s": 70.0,
       "max_torque_Nm": 0.041357635322037664,
       "max_rotor_speed_rad_s": 405.3785676222875,
-      "max_radius_error_m": 0.0005941049054167813,
+      "max_radius_error_m": 0.0005941049054172254,
       "max_altitude_error_m": 9.091667494409705e-07,
-      "max_speed_error_m_s": 0.00019167424005517297,
+      "max_speed_error_m_s": 0.000191674240055284,
       "evaluated_duration_s": 60.0
     },
     "battery": {
       "initial_soc": 0.9643630716273007,
       "final_soc": 0.9433527982196173,
-      "energy_used_Wh": 1.7671466489071346,
+      "energy_used_Wh": 1.767146648907135,
       "charge_used_Ah": 0.07227534052243409,
       "nominal_pack_energy_Wh": 92.88,
       "minimum_voltage_V": 24.35432702938068,
-      "peak_current_A": 3.7316461621764034,
+      "peak_current_A": 3.7316461621764043,
       "peak_power_W": 90.8976416844119,
       "battery_mass_kg": 0.48000000000000004,
       "airframe_and_propulsion_mass_kg": 0.72,
@@ -174,24 +174,24 @@
       "leg1": {
         "distance_in_5s_m": 4.953818621992504,
         "average_speed_in_5s_m_s": 0.9907637243985008,
-        "average_speed_including_settle_m_s": 0.6062529242914949,
-        "endpoint_error_m": 0.007658699299150547,
-        "stop_speed_m_s": 0.005330565676944554,
-        "max_altitude_error_m": 0.006295933540347409
+        "average_speed_including_settle_m_s": 0.6062529242914948,
+        "endpoint_error_m": 0.007658699299149666,
+        "stop_speed_m_s": 0.005330565676944616,
+        "max_altitude_error_m": 0.00629593354034752
       },
       "leg2": {
-        "distance_in_5s_m": 4.954511258151917,
-        "average_speed_in_5s_m_s": 0.9909022516303834,
+        "distance_in_5s_m": 4.954511258151916,
+        "average_speed_in_5s_m_s": 0.9909022516303831,
         "average_speed_including_settle_m_s": 0.6063347957573967,
         "endpoint_error_m": 0.007664359824716725,
-        "stop_speed_m_s": 0.005330941106128584,
+        "stop_speed_m_s": 0.00533094110612967,
         "max_altitude_error_m": 0.00613597998764559
       },
       "touchdown": {
         "time_s": 150.96999999999997,
-        "vertical_speed_m_s": 0.008000000000000191,
+        "vertical_speed_m_s": 0.007999999999999988,
         "position_m": [
-          4.999999999999988,
+          4.999999999999987,
           5.0000000000000115,
           0.0
         ]
@@ -247,12 +247,12 @@
         "start_s": 4.5,
         "end_s": 12.77,
         "end_position_m": [
-          5.007590802935239,
-          6.476895505216926e-09,
-          0.9996220623776005
+          5.007590802935238,
+          6.476895491719787e-09,
+          0.9996220623776004
         ],
-        "end_yaw_rad": -6.849824674884172e-09,
-        "end_speed_m_s": 0.0063681481344740505
+        "end_yaw_rad": -6.849824680576162e-09,
+        "end_speed_m_s": 0.006368148134474108
       },
       {
         "phase": "yaw",
@@ -260,11 +260,11 @@
         "end_s": 17.7,
         "end_position_m": [
           4.9994846297187205,
-          -0.0006705853976295442,
-          0.9999962625063016
+          -0.0006705853976292517,
+          0.9999962625063017
         ],
         "end_yaw_rad": 1.5687492934907252,
-        "end_speed_m_s": 0.003441164117961498
+        "end_speed_m_s": 0.0034411641179616192
       },
       {
         "phase": "leg2",
@@ -276,7 +276,7 @@
           0.9996216430368129
         ],
         "end_yaw_rad": 1.570796417835626,
-        "end_speed_m_s": 0.006369212235064572
+        "end_speed_m_s": 0.006369212235065655
       }
     ],
     "parameters": {

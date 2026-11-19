@@ -20,6 +20,7 @@ Checked November 18, 2026.
 | Capacity | 4.5 Ah typical, 4.3 Ah minimum | 4.3 Ah |
 | Continuous discharge | 45 A with 80 C cutoff | 45 A current ceiling; temperature not simulated |
 | Cell mass | 70 g maximum | 70 g |
+| Typical DC impedance at 50% SOC | 15 milliohm | 0.015 ohm, approximated as constant |
 
 Pack design choice: 6 series, 1 parallel (6 cells). Nominal energy is
 `6 * 3.6 * 4.3 = 92.88 Wh`. Packaging adds an assumed 60 g to 420 g of cells.
@@ -30,7 +31,7 @@ pack with specified protection, wiring, connectors and thermal management.
 
 | Quantity | Assumed value |
 |---|---|
-| Per-cell DC equivalent resistance | 0.015 ohm |
+| Resistance away from the specified 50% SOC condition | Held at 0.015 ohm; temperature/SOC dependence omitted |
 | Motor efficiency | 85% |
 | ESC efficiency | 95% |
 | Avionics power | 5 W |
@@ -75,7 +76,14 @@ stops the run and marks failure rather than pretending a successful landing.
 
 Select and document actual motor, ESC, propeller, frame and electronics, including
 their mass, torque/speed envelope, thrust/drag coefficients and efficiency map.
-Replace assumed OCV/resistance with validated data and check temperature if using
+Replace assumed OCV/constant-resistance behavior with validated data and check temperature if using
 the 45 A cell rating. Recalculate inertia with the selected battery placement.
 Until then, ER3 is a conditional simulation demonstration and full ER4 and the
 off-the-shelf component bonus must not be claimed.
+
+The selected D440 design now supplies a component selection and calculated
+parameters in [DRONE_DESIGN.md](DRONE_DESIGN.md). It uses a documented assembled
+GNB pack and more conservative operating limits; `run_design.py` passes that
+configuration explicitly. The earlier settings described in this file remain
+the baseline. Catalog-supported design and simulated operation still require
+the physical validation described in the design document.

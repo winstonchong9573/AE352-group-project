@@ -1,0 +1,23 @@
+component,installed_quantity,unit_mass_g,total_mass_g,basis_or_purchase_note,source
+KDE2315XF-885 motor,4,75.0,300.0,published wired mass; uniform envelope inertia,https://www.kdedirect.com/products/kde2315xf-885
+APC 9x4.5MR,2,11.056314018750001,22.112628037500002,"published mass; uniform-blade approximation, azimuth averaged",https://www.apcprop.com/product/9x4-5mr/
+prop adapter and retention allowance,4,5.0,20.0,assumed additional hardware mass; verify assembled motor mass,
+KDEXF-UAS20LV ESC,4,26.0,104.0,published wired mass and PCB planform; thickness assumed,https://www.kdedirect.com/products/kdexf-uas20lv
+180 mm arm tube,4,15.569999999999999,62.279999999999994,published 86.5 g/m; 20/18 mm OD/ID; length chosen,https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+40 mm square motor plate,4,4.4799999999999995,17.919999999999998,"nominal 2 mm stock: published 2.80 kg/m2, typical 1.7 mm thickness",https://www.easycomposites.co.uk/high-strength-carbon-fibre-sheet
+clamp/joint at 0.05 m,4,5.0,20.0,"custom PA12 clamp, bolts and inserts: mass/envelope allowance",
+clamp/joint at 0.21 m,4,5.0,20.0,"custom PA12 clamp, bolts and inserts: mass/envelope allowance",
+160 mm landing leg,4,13.84,55.36,"same tube stock; top z=-10 mm, foot z=-170 mm",https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+APC 9x4.5MRP,2,11.056314018750001,22.112628037500002,"published mass; uniform-blade approximation, azimuth averaged",https://www.apcprop.com/product/9x4-5mrp/
+upper 120 mm square center plate,1,40.31999999999999,40.31999999999999,"published areal mass; undrilled blank, conservative",https://www.easycomposites.co.uk/high-strength-carbon-fibre-sheet
+lower 120 mm square center plate,1,40.31999999999999,40.31999999999999,"published areal mass; undrilled blank, conservative",https://www.easycomposites.co.uk/high-strength-carbon-fibre-sheet
+GNB45006S10M battery,1,475.0,475.0,published 460 +/-15 g: use upper mass; uniform-box inertia approximation,https://www.gaoneng.shop/products/gaoneng-gnb-6s-22.2v-4500mah-10c-xt60-li-ion-battery-made-with-molicel-21700-p45b
+Pixhawk 6C Mini Model A current revision,1,42.4,42.4,published mass and envelope,https://docs.holybro.com/autopilot/pixhawk-6c-mini/technical-specification
+Holybro PM06 V2 14S,1,24.0,24.0,published mass and envelope,https://holybro.com/products/micro-power-module-pm06-v2
+Holybro M10 GPS,1,32.0,32.0,published mass/diameter; square bounding-box inertia approximation,https://holybro.com/products/m10-gps
+Holybro H-Flow,1,15.2,15.2,"published cased mass; assumed bounding envelope, verify mounting drawing",https://docs.holybro.com/peripherals/h-flow-dronecan/overview
+RadioMaster RP1 V2 with antenna,1,2.2,2.2,published mass incl antenna; lumped at center,https://radiomasterrc.com/products/rp1-expresslrs-2-4ghz-nano-receiver
+"Harness, feet, leg joints, straps, mast and fasteners",1,60.0,60.0,engineering allowance; includes landing-leg joints; not a purchased part,
+Carbon tube stock purchase,2 x 1 m,,,Cut 4 x 180 mm arms and 4 x 160 mm legs; installed masses counted above,https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+Carbon sheet stock purchase,1 x 250 x 230 mm nominal 2 mm sheet,,,Cut 2 x 120 mm squares and 4 x 40 mm squares; installed masses counted above,https://www.easycomposites.co.uk/high-strength-carbon-fibre-sheet
+APC LPAR06E centering rings,4 suitable rings,,,Verify fit on supplied KDE M6 adapters; mass included in retention allowance,https://www.apcprop.com/product/9x4-5mr/

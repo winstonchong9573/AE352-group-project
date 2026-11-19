@@ -1,5 +1,12 @@
 # AE352 quadcopter simulation
 
+The researched **D440 component design** is in [DRONE_DESIGN.md](DRONE_DESIGN.md),
+with a bill of materials, a dimensioned drawing, calculated inertia, and fitted
+APC propeller data. Run `python run_design.py` for this configuration; it writes
+to `results/design/`. `python ae352.py` continues to run the original parameter
+baseline described below. Design evidence is summarized in
+[DESIGN_RESULTS.md](DESIGN_RESULTS.md).
+
 Mechanical six-degree-of-freedom model driven only by four motor torques.
 Includes rotor inertia, position/attitude feedback, ground support, three missions,
 and a finite battery with voltage sag, current limits, drive losses and cutoff.

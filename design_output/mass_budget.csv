@@ -1,0 +1,47 @@
+part,mass_g,x_mm,y_mm,z_mm,basis,source
+front: KDE2315XF-885 motor,75.0,220.0,0.0,26.0,published wired mass; uniform envelope inertia,https://www.kdedirect.com/products/kde2315xf-885
+front: APC 9x4.5MR,11.056314018750001,220.0,0.0,46.0,"published mass; uniform-blade approximation, azimuth averaged",https://www.apcprop.com/product/9x4-5mr/
+front: prop adapter and retention allowance,5.0,220.0,0.0,42.0,assumed additional hardware mass; verify assembled motor mass,
+front: KDEXF-UAS20LV ESC,26.0,130.0,0.0,-18.0,published wired mass and PCB planform; thickness assumed,https://www.kdedirect.com/products/kdexf-uas20lv
+front: 180 mm arm tube,15.569999999999999,130.0,0.0,0.0,published 86.5 g/m; 20/18 mm OD/ID; length chosen,https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+front: 40 mm square motor plate,4.4799999999999995,220.0,0.0,10.85,"nominal 2 mm stock: published 2.80 kg/m2, typical 1.7 mm thickness",https://www.easycomposites.co.uk/high-strength-carbon-fibre-sheet
+front: clamp/joint at 0.05 m,5.0,50.0,0.0,0.0,"custom PA12 clamp, bolts and inserts: mass/envelope allowance",
+front: clamp/joint at 0.21 m,5.0,210.0,0.0,0.0,"custom PA12 clamp, bolts and inserts: mass/envelope allowance",
+front: 160 mm landing leg,13.84,100.0,0.0,-90.0,"same tube stock; top z=-10 mm, foot z=-170 mm",https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+left: KDE2315XF-885 motor,75.0,0.0,220.0,26.0,published wired mass; uniform envelope inertia,https://www.kdedirect.com/products/kde2315xf-885
+left: APC 9x4.5MRP,11.056314018750001,0.0,220.0,46.0,"published mass; uniform-blade approximation, azimuth averaged",https://www.apcprop.com/product/9x4-5mrp/
+left: prop adapter and retention allowance,5.0,0.0,220.0,42.0,assumed additional hardware mass; verify assembled motor mass,
+left: KDEXF-UAS20LV ESC,26.0,0.0,130.0,-18.0,published wired mass and PCB planform; thickness assumed,https://www.kdedirect.com/products/kdexf-uas20lv
+left: 180 mm arm tube,15.569999999999999,0.0,130.0,0.0,published 86.5 g/m; 20/18 mm OD/ID; length chosen,https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+left: 40 mm square motor plate,4.4799999999999995,0.0,220.0,10.85,"nominal 2 mm stock: published 2.80 kg/m2, typical 1.7 mm thickness",https://www.easycomposites.co.uk/high-strength-carbon-fibre-sheet
+left: clamp/joint at 0.05 m,5.0,0.0,50.0,0.0,"custom PA12 clamp, bolts and inserts: mass/envelope allowance",
+left: clamp/joint at 0.21 m,5.0,0.0,210.0,0.0,"custom PA12 clamp, bolts and inserts: mass/envelope allowance",
+left: 160 mm landing leg,13.84,0.0,100.0,-90.0,"same tube stock; top z=-10 mm, foot z=-170 mm",https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+rear: KDE2315XF-885 motor,75.0,-220.0,0.0,26.0,published wired mass; uniform envelope inertia,https://www.kdedirect.com/products/kde2315xf-885
+rear: APC 9x4.5MR,11.056314018750001,-220.0,0.0,46.0,"published mass; uniform-blade approximation, azimuth averaged",https://www.apcprop.com/product/9x4-5mr/
+rear: prop adapter and retention allowance,5.0,-220.0,0.0,42.0,assumed additional hardware mass; verify assembled motor mass,
+rear: KDEXF-UAS20LV ESC,26.0,-130.0,0.0,-18.0,published wired mass and PCB planform; thickness assumed,https://www.kdedirect.com/products/kdexf-uas20lv
+rear: 180 mm arm tube,15.569999999999999,-130.0,0.0,0.0,published 86.5 g/m; 20/18 mm OD/ID; length chosen,https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+rear: 40 mm square motor plate,4.4799999999999995,-220.0,0.0,10.85,"nominal 2 mm stock: published 2.80 kg/m2, typical 1.7 mm thickness",https://www.easycomposites.co.uk/high-strength-carbon-fibre-sheet
+rear: clamp/joint at 0.05 m,5.0,-50.0,0.0,0.0,"custom PA12 clamp, bolts and inserts: mass/envelope allowance",
+rear: clamp/joint at 0.21 m,5.0,-210.0,0.0,0.0,"custom PA12 clamp, bolts and inserts: mass/envelope allowance",
+rear: 160 mm landing leg,13.84,-100.0,0.0,-90.0,"same tube stock; top z=-10 mm, foot z=-170 mm",https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+right: KDE2315XF-885 motor,75.0,0.0,-220.0,26.0,published wired mass; uniform envelope inertia,https://www.kdedirect.com/products/kde2315xf-885
+right: APC 9x4.5MRP,11.056314018750001,0.0,-220.0,46.0,"published mass; uniform-blade approximation, azimuth averaged",https://www.apcprop.com/product/9x4-5mrp/
+right: prop adapter and retention allowance,5.0,0.0,-220.0,42.0,assumed additional hardware mass; verify assembled motor mass,
+right: KDEXF-UAS20LV ESC,26.0,0.0,-130.0,-18.0,published wired mass and PCB planform; thickness assumed,https://www.kdedirect.com/products/kdexf-uas20lv
+right: 180 mm arm tube,15.569999999999999,0.0,-130.0,0.0,published 86.5 g/m; 20/18 mm OD/ID; length chosen,https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+right: 40 mm square motor plate,4.4799999999999995,0.0,-220.0,10.85,"nominal 2 mm stock: published 2.80 kg/m2, typical 1.7 mm thickness",https://www.easycomposites.co.uk/high-strength-carbon-fibre-sheet
+right: clamp/joint at 0.05 m,5.0,0.0,-50.0,0.0,"custom PA12 clamp, bolts and inserts: mass/envelope allowance",
+right: clamp/joint at 0.21 m,5.0,0.0,-210.0,0.0,"custom PA12 clamp, bolts and inserts: mass/envelope allowance",
+right: 160 mm landing leg,13.84,0.0,-100.0,-90.0,"same tube stock; top z=-10 mm, foot z=-170 mm",https://www.easycomposites.co.uk/20mm-woven-finish-carbon-fibre-tube
+upper 120 mm square center plate,40.31999999999999,0.0,0.0,10.85,"published areal mass; undrilled blank, conservative",https://www.easycomposites.co.uk/high-strength-carbon-fibre-sheet
+lower 120 mm square center plate,40.31999999999999,0.0,0.0,-10.85,"published areal mass; undrilled blank, conservative",https://www.easycomposites.co.uk/high-strength-carbon-fibre-sheet
+GNB45006S10M battery,475.0,0.0,0.0,-36.5,published 460 +/-15 g: use upper mass; uniform-box inertia approximation,https://www.gaoneng.shop/products/gaoneng-gnb-6s-22.2v-4500mah-10c-xt60-li-ion-battery-made-with-molicel-21700-p45b
+Pixhawk 6C Mini Model A current revision,42.4,0.0,0.0,24.0,published mass and envelope,https://docs.holybro.com/autopilot/pixhawk-6c-mini/technical-specification
+Holybro PM06 V2 14S,24.0,0.0,0.0,0.0,published mass and envelope,https://holybro.com/products/micro-power-module-pm06-v2
+Holybro M10 GPS,32.0,0.0,0.0,80.0,published mass/diameter; square bounding-box inertia approximation,https://holybro.com/products/m10-gps
+Holybro H-Flow,15.2,0.0,0.0,-75.0,"published cased mass; assumed bounding envelope, verify mounting drawing",https://docs.holybro.com/peripherals/h-flow-dronecan/overview
+RadioMaster RP1 V2 with antenna,2.2,0.0,0.0,45.0,published mass incl antenna; lumped at center,https://radiomasterrc.com/products/rp1-expresslrs-2-4ghz-nano-receiver
+"Harness, feet, leg joints, straps, mast and fasteners",60.0,0.0,0.0,-20.0,engineering allowance; includes landing-leg joints; not a purchased part,
+Distributed 10% design allowance,137.52252560750003,-3.1535260647550985e-16,-3.1535260647550985e-16,-8.716031186600237,not an additional battery or purchased part,

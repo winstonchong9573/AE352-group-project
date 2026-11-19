@@ -18,7 +18,7 @@ class BatteryParams:
     cell_max_current_A: float = 45.0  # datasheet rating has 80 C thermal cutoff
     cell_mass_kg: float = .070  # datasheet maximum
     packaging_mass_kg: float = .060  # assumption: wiring, enclosure, protection
-    cell_resistance_ohm: float = .015  # assumed DC equivalent, not a measured rating
+    cell_resistance_ohm: float = .015  # datasheet typical DC at 50% SOC; held constant as an approximation
     discharge_efficiency: float = .8  # conservative effective-capacity factor
     motor_efficiency: float = .85  # assumption; constant over operating range
     esc_efficiency: float = .95  # assumption
